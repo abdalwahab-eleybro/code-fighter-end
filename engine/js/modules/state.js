@@ -6,7 +6,7 @@
 
 window.CF = window.CF || {};
 
-CF.State = (() => {
+CF.State = (function() {
   const STORAGE_KEY = 'codefighter_profile_v1';
   const SCHEMA_VERSION = 1;
 
@@ -20,10 +20,10 @@ CF.State = (() => {
       unlockedFighters: ['ninja'],
       equippedFighter: 'ninja',
       achievements: {},
-      campaignLevels: {},          // { levelId: { cleared, stars, bestTime } }
+      campaignLevels: {},
       currentCampaignLevel: 'p1-easy',
-      questionHistory: {},         // reserved for spaced repetition
-      patternStats: {},            // reserved for weak-spot recommender
+      questionHistory: {},
+      patternStats: {},
       streak: { current: 0, best: 0, lastPlayedDate: null, freezesLeft: 1 },
       upgrades: { maxHP: 0, baseDamage: 0, freeHints: 0, comboShield: false, rerolls: 0 },
       settings: { musicVolume: 0.4, sfxVolume: 0.7 }
@@ -46,7 +46,6 @@ CF.State = (() => {
 
   /* Migrate old profile data */
   function migrate(old) {
-    // Future schema upgrades land here
     return { ...defaultProfile(), ...old, version: SCHEMA_VERSION };
   }
 
@@ -120,11 +119,13 @@ CF.State = (() => {
       profile.playerLevel++;
       leveledUp = true;
       // Unlock fighters at level thresholds
-      CF.Fighters.FIGHTERS.forEach(f => {
-        if (f.unlockLevel === profile.playerLevel && !profile.unlockedFighters.includes(f.id)) {
-          profile.unlockedFighters.push(f.id);
-        }
-      });
+      if (window.CF && window.CF.Fighters) {
+        window.CF.Fighters.FIGHTERS.forEach(f => {
+          if (f.unlockLevel === profile.playerLevel && !profile.unlockedFighters.includes(f.id)) {
+            profile.unlockedFighters.push(f.id);
+          }
+        });
+      }
     }
     save();
     return leveledUp;
@@ -137,7 +138,10 @@ CF.State = (() => {
 
   /* Fighter Management */
   function getFighter(id) {
-    return CF.Fighters.getFighter(id);
+    if (window.CF && window.CF.Fighters) {
+      return window.CF.Fighters.getFighter(id);
+    }
+    return { id: id, name: id, icon: '\ud83e\udd77' };
   }
 
   function equipFighter(id) {
@@ -149,10 +153,13 @@ CF.State = (() => {
 
   /* Campaign Management */
   function isLevelUnlocked(levelId) {
-    const idx = CF.Campaign.levels.findIndex(l => l.id === levelId);
-    if (idx <= 0) return true;   // first level always unlocked
-    const prev = CF.Campaign.levels[idx - 1];
-    return !!(profile.campaignLevels[prev.id]?.cleared);
+    if (window.CF && window.CF.Campaign) {
+      const idx = window.CF.Campaign.levels.findIndex(l => l.id === levelId);
+      if (idx <= 0) return true;
+      const prev = window.CF.Campaign.levels[idx - 1];
+      return !!(profile.campaignLevels[prev.id]?.cleared);
+    }
+    return true;
   }
 
   function completeCampaignLevel(levelId, stars) {
@@ -173,7 +180,7 @@ CF.State = (() => {
   function checkAndUpdateStreak() {
     const today = todayISO();
     const last = profile.streak.lastPlayedDate;
-    if (last === today) return false;   // already counted today
+    if (last === today) return false;
 
     const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
     if (last === yesterday) {

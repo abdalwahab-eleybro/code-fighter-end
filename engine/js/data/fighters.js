@@ -1,9 +1,11 @@
-// Fighters Data Module
-// Contains all fighter definitions and related data
+/**
+ * Fighters Data Module
+ * Contains all fighter definitions and related data
+ */
 
 window.CF = window.CF || {};
 
-CF.Fighters = (() => {
+CF.Fighters = (function() {
   const FIGHTERS = [
     { id: 'ninja',   name: 'Ninja',   icon: '\ud83e\udd77', unlockLevel: 1  },
     { id: 'monk',    name: 'Monk',    icon: '\ud83e\uddd8', unlockLevel: 3  },
@@ -14,7 +16,6 @@ CF.Fighters = (() => {
     { id: 'void',    name: 'Void',    icon: '\ud83c\udf0c', unlockLevel: 25 }
   ];
 
-  // Fighter archetypes for enemies
   const ARCHETYPES = {
     bot: { name: 'Bot', icon: '\ud83d\udc7e', color: '--enemy' },
     ghost: { name: 'Ghost', icon: '\ud83d\udc7b', color: '#a5f3fc' },
@@ -24,22 +25,18 @@ CF.Fighters = (() => {
     boss: { name: 'Boss', icon: '\ud83d\udc09', color: '#f43f5e' }
   };
 
-  // Get fighter by ID
   function getFighter(id) {
     return FIGHTERS.find(f => f.id === id) || FIGHTERS[0];
   }
 
-  // Get all fighters
   function getAllFighters() {
     return [...FIGHTERS];
   }
 
-  // Get archetype by ID
   function getArchetype(id) {
     return ARCHETYPES[id] || ARCHETYPES.bot;
   }
 
-  // Get all archetypes
   function getAllArchetypes() {
     return { ...ARCHETYPES };
   }
