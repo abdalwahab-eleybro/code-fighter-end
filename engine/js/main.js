@@ -16,17 +16,28 @@ document.addEventListener('DOMContentLoaded', () => {
     // They should have already initialized themselves
     
     // Initialize navigation first
-    CF.UI.Navigation.init();
+    if (CF.UI && CF.UI.Navigation && CF.UI.Navigation.init) {
+      CF.UI.Navigation.init();
+    } else {
+      console.warn('CF.UI.Navigation.init not found');
+    }
     
     // Update profile bar
-    CF.UI.ProfileBar.render();
+    if (CF.UI && CF.UI.ProfileBar && CF.UI.ProfileBar.render) {
+      CF.UI.ProfileBar.render();
+    } else {
+      console.warn('CF.UI.ProfileBar.render not found');
+    }
     
     // Set up periodic updates
-    setInterval(CF.UI.ProfileBar.update, 1000);
+    if (CF.UI && CF.UI.ProfileBar && CF.UI.ProfileBar.update) {
+      setInterval(CF.UI.ProfileBar.update, 1000);
+    }
     
     console.log('Code Fighter Engine Initialized Successfully');
   } catch (error) {
     console.error('Failed to initialize Code Fighter Engine:', error);
+    console.error('Error stack:', error.stack);
     
     // Show error message
     const errorMsg = document.createElement('div');
