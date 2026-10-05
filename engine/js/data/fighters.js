@@ -1,10 +1,12 @@
-// Fighters Data Module
-// Contains all fighter definitions and related data
+/**
+ * Fighters Data Module
+ * Contains all fighter definitions and related data
+ */
 
 window.CF = window.CF || {};
 
-CF.Fighters = (() => {
-  const FIGHTERS = [
+CF.Fighters = (function() {
+  var FIGHTERS = [
     { id: 'ninja',   name: 'Ninja',   icon: '\ud83e\udd77', unlockLevel: 1  },
     { id: 'monk',    name: 'Monk',    icon: '\ud83e\uddd8', unlockLevel: 3  },
     { id: 'ronin',   name: 'Ronin',   icon: '\u2694\ufe0f', unlockLevel: 5  },
@@ -15,7 +17,7 @@ CF.Fighters = (() => {
   ];
 
   // Fighter archetypes for enemies
-  const ARCHETYPES = {
+  var ARCHETYPES = {
     bot: { name: 'Bot', icon: '\ud83d\udc7e', color: '--enemy' },
     ghost: { name: 'Ghost', icon: '\ud83d\udc7b', color: '#a5f3fc' },
     tank: { name: 'Tank', icon: '\ud83e\udd77', color: '#94a3b8' },
@@ -26,12 +28,12 @@ CF.Fighters = (() => {
 
   // Get fighter by ID
   function getFighter(id) {
-    return FIGHTERS.find(f => f.id === id) || FIGHTERS[0];
+    return FIGHTERS.find(function(f) { return f.id === id; }) || FIGHTERS[0];
   }
 
   // Get all fighters
   function getAllFighters() {
-    return [...FIGHTERS];
+    return FIGHTERS.slice();
   }
 
   // Get archetype by ID
@@ -41,15 +43,19 @@ CF.Fighters = (() => {
 
   // Get all archetypes
   function getAllArchetypes() {
-    return { ...ARCHETYPES };
+    var result = {};
+    for (var key in ARCHETYPES) {
+      result[key] = ARCHETYPES[key];
+    }
+    return result;
   }
 
   return {
-    FIGHTERS,
-    ARCHETYPES,
-    getFighter,
-    getAllFighters,
-    getArchetype,
-    getAllArchetypes
+    FIGHTERS: FIGHTERS,
+    ARCHETYPES: ARCHETYPES,
+    getFighter: getFighter,
+    getAllFighters: getAllFighters,
+    getArchetype: getArchetype,
+    getAllArchetypes: getAllArchetypes
   };
 })();

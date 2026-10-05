@@ -8,53 +8,165 @@
   
   <!-- Load CSS -->
   <link rel="stylesheet" href="css/styles.css">
-  
-  <!-- Preload templates -->
-  <link rel="preload" href="templates/menu.html" as="document">
-  <link rel="preload" href="templates/map.html" as="document">
-  <link rel="preload" href="templates/fight.html" as="document">
-  <link rel="preload" href="templates/shop.html" as="document">
-  <link rel="preload" href="templates/settings.html" as="document">
-  <link rel="preload" href="templates/recap.html" as="document">
-  <link rel="preload" href="templates/learn.html" as="document">
 </head>
 <body>
-  <!-- Container for all screens -->
-  <div id="app"></div>
-
-  <!-- Load Templates -->
-  <div id="templates" style="display: none;">
-    <!-- Templates will be loaded dynamically -->
+  <!-- ============================================
+       EMBEDDED TEMPLATES
+       ============================================ -->
+  
+  <!-- Menu Screen -->
+  <div class="screen" id="screen-menu">
+    <div class="menu-card">
+      <h1>&#9881;&#65039; CODE FIGHTER</h1>
+      <p class="tag">Campaign &middot; Volume 1 &middot; Arrays &amp; Strings</p>
+      <div class="menu-options">
+        <button class="menu-btn" id="btnCampaign">
+          <span class="icon">&#127926;&#65039;</span>
+          <div>
+            <strong>Campaign</strong>
+            <small>Linear progression &middot; 52 levels &middot; Vol 1</small>
+          </div>
+        </button>
+        <button class="menu-btn" id="btnLearn">
+          <span class="icon">&#127883;</span>
+          <div>
+            <strong>Learn &mdash; Interactive Lessons</strong>
+            <small>Watch &middot; predict &middot; drive the pointers &middot; AI tutor</small>
+          </div>
+        </button>
+        <button class="menu-btn" id="btnBlitz">
+          <span class="icon">&#9825;</span>
+          <div>
+            <strong>Blitz Run</strong>
+            <small>10 questions &middot; 10s each &middot; random patterns</small>
+          </div>
+        </button>
+        <button class="menu-btn" id="btnShop">
+          <span class="icon">&#128190;</span>
+          <div>
+            <strong>Shop</strong>
+            <small>Spend coins on upgrades</small>
+          </div>
+        </button>
+        <button class="menu-btn" id="btnSettings">
+          <span class="icon">&#9889;&#65039;</span>
+          <div>
+            <strong>Settings</strong>
+            <small>Audio, stats, profile, reset</small>
+          </div>
+        </button>
+      </div>
+    </div>
   </div>
 
-  <!-- Load JavaScript -->
-  <!-- Data Modules (load first) -->
+  <!-- Map Screen -->
+  <div class="screen" id="screen-map">
+    <div id="profileBar"></div>
+    <div class="map-header">
+      <button class="back-btn" id="btnMapBack">&larr; Menu</button>
+      <div style="flex:1">
+        <div class="map-title">Campaign Map</div>
+        <div class="map-sub" id="mapProgress">0 / 52 levels cleared</div>
+      </div>
+    </div>
+    <div id="weakSpotBanner"></div>
+    <div id="reviewNode"></div>
+    <div id="mapList" class="level-list"></div>
+  </div>
+
+  <!-- Fight Screen -->
+  <div class="screen" id="screen-fight">
+    <header class="fight-hud">
+      <div class="fight-fighter-info">
+        <span class="fight-name">&#129431; You</span>
+        <div class="fight-bar"><div class="fight-fill" id="fightPlayerHealth" style="width:100%"></div></div>
+      </div>
+      <div class="fight-timer-box">
+        <div class="fight-timer" id="fightTimer">0:00</div>
+        <div class="fight-timer-label">TIME</div>
+      </div>
+      <div class="fight-fighter-info right">
+        <span class="fight-name enemy-name" id="fightEnemyName">&#128126; Bot</span>
+        <div class="fight-bar"><div class="fight-fill enemy-fill" id="fightEnemyHealth" style="width:100%"></div></div>
+      </div>
+    </header>
+    <div class="arena" id="fightArena">
+      <div class="fighter player" id="fightPlayer">&#129431;</div>
+      <div class="fighter enemy" id="fightEnemy">&#128126;</div>
+    </div>
+    <div class="fight-question-wrap">
+      <div class="boss-banner" id="bossBanner" style="display:none"></div>
+      <div class="fight-question-head">
+        <span class="question-counter" id="questionCounter">Q1 / 5</span>
+        <span class="tier-timer" id="tierTimer" data-tier="perfect">0.0s</span>
+      </div>
+      <div id="questionWrap"></div>
+      <div class="fight-feedback" id="fightFeedback"></div>
+      <div class="fight-actions">
+        <button class="btn ghost" id="fightHint">&#128269; Hint (&minus;5 HP)</button>
+        <button class="btn ghost" id="fightSkip">&#8963; Skip (&minus;10 HP)</button>
+        <button class="btn ghost" id="fightExit">&times; Exit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shop Screen -->
+  <div class="screen" id="screen-shop">
+    <div id="shopContent"></div>
+  </div>
+
+  <!-- Settings Screen -->
+  <div class="screen" id="screen-settings">
+    <div id="settingsContent"></div>
+  </div>
+
+  <!-- Recap Screen -->
+  <div class="screen" id="screen-recap">
+    <div id="recapContent"></div>
+  </div>
+
+  <!-- Learn Screen -->
+  <div class="screen" id="screen-learn">
+    <div id="learnContent"></div>
+  </div>
+
+  <!-- ============================================
+       SCRIPTS - Loaded in dependency order
+       ============================================ -->
+  
+  <!-- Data Modules (no dependencies) -->
   <script src="js/data/fighters.js"></script>
   <script src="js/data/patterns.js"></script>
+  
+  <!-- Core State Module (no dependencies) -->
+  <script src="js/modules/state.js"></script>
+  
+  <!-- Data that depends on state -->
   <script src="js/data/questions.js"></script>
   
-  <!-- Core Modules -->
-  <script src="js/modules/state.js"></script>
+  <!-- Campaign depends on state and patterns -->
   <script src="js/modules/campaign.js"></script>
   
-  <!-- UI Modules -->
+  <!-- UI Components (depends on state) -->
   <script src="js/ui/components.js"></script>
-  <script src="js/ui/navigation.js"></script>
-  <script src="js/ui/profile-bar.js"></script>
-  <script src="js/ui/map-ui.js"></script>
-  <script src="js/ui/fight-ui.js"></script>
-  <script src="js/ui/recap-ui.js"></script>
-  <script src="js/ui/shop-ui.js"></script>
-  <script src="js/ui/settings-ui.js"></script>
-  <script src="js/ui/learn-ui.js"></script>
   
-  <!-- Feature Modules -->
+  <!-- Feature modules -->
   <script src="js/modules/fight.js"></script>
   <script src="js/modules/shop.js"></script>
   <script src="js/modules/settings.js"></script>
   <script src="js/modules/blitz.js"></script>
   <script src="js/modules/learn.js"></script>
   <script src="js/modules/audio.js"></script>
+  
+  <!-- UI Modules (depend on various modules) -->
+  <script src="js/ui/profile-bar.js"></script>
+  <script src="js/ui/navigation.js"></script>
+  <script src="js/ui/map-ui.js"></script>
+  <script src="js/ui/fight-ui.js"></script>
+  <script src="js/ui/recap-ui.js"></script>
+  <script src="js/ui/shop-ui.js"></script>
+  <script src="js/ui/settings-ui.js"></script>
+  <script src="js/ui/learn-ui.js"></script>
   
   <!-- Main Entry Point -->
   <script src="js/main.js"></script>

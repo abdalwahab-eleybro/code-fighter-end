@@ -1,10 +1,12 @@
-// Patterns Data Module
-// Contains all pattern definitions for the campaign
+/**
+ * Patterns Data Module
+ * Contains all pattern definitions for the campaign
+ */
 
 window.CF = window.CF || {};
 
-CF.Patterns = (() => {
-  const PATTERNS = [
+CF.Patterns = (function() {
+  var PATTERNS = [
     { id: 'f1',    name: 'Foundations',          volume: 1, icon: '\ud83c\udf93' },
     { id: 'p1',    name: 'Converging',            volume: 1, icon: '\u25b6' },
     { id: 'p2',    name: 'Read-Write',            volume: 1, icon: '\u2192' },
@@ -21,14 +23,14 @@ CF.Patterns = (() => {
     { id: 'x8',    name: 'Prefix + Hash',         volume: 1, icon: '\u2699' }
   ];
 
-  const TIERS = [
+  var TIERS = [
     { suffix: 'easy',   diff: 1, enemy: 'bot',   questions: 5, reward: { xp: 50,  coins: 20  }, label: 'Easy' },
     { suffix: 'medium', diff: 2, enemy: 'bot',   questions: 6, reward: { xp: 80,  coins: 30  }, label: 'Medium' },
     { suffix: 'hard',   diff: 3, enemy: 'ghost', questions: 7, reward: { xp: 120, coins: 45  }, label: 'Hard' },
     { suffix: 'boss',   diff: 3, enemy: 'boss',  questions: 8, reward: { xp: 200, coins: 100 }, label: 'Boss' }
   ];
 
-  const VOLUME_NAMES = {
+  var VOLUME_NAMES = {
     1: 'Arrays & Strings',
     2: 'Binary Search & Ranges',
     3: 'Hash, Stack, Heap',
@@ -40,22 +42,28 @@ CF.Patterns = (() => {
 
   // Get pattern by ID
   function getPattern(id) {
-    return PATTERNS.find(p => p.id === id) || PATTERNS[0];
+    for (var i = 0; i < PATTERNS.length; i++) {
+      if (PATTERNS[i].id === id) return PATTERNS[i];
+    }
+    return PATTERNS[0];
   }
 
   // Get tier by suffix
   function getTier(suffix) {
-    return TIERS.find(t => t.suffix === suffix) || TIERS[0];
+    for (var i = 0; i < TIERS.length; i++) {
+      if (TIERS[i].suffix === suffix) return TIERS[i];
+    }
+    return TIERS[0];
   }
 
   // Get all patterns
   function getAllPatterns() {
-    return [...PATTERNS];
+    return PATTERNS.slice();
   }
 
   // Get all tiers
   function getAllTiers() {
-    return [...TIERS];
+    return TIERS.slice();
   }
 
   // Get volume name
@@ -70,12 +78,11 @@ CF.Patterns = (() => {
 
   // Generate level ID from pattern and tier
   function makeLevelId(patternId, tierSuffix) {
-    return `${patternId}-${tierSuffix}`;
+    return patternId + '-' + tierSuffix;
   }
 
   // Get tier icon
   function getTierIcon(tierSuffix) {
-    const tier = getTier(tierSuffix);
     if (tierSuffix === 'boss') return '\ud83d\udc09';
     if (tierSuffix === 'hard') return '\u2694\ufe0f';
     if (tierSuffix === 'medium') return '\ud83c\udfaf';
@@ -84,21 +91,22 @@ CF.Patterns = (() => {
 
   // Get tier enemy icon
   function getTierEnemyIcon(enemy) {
-    return { bot: '\ud83d\udc7e', ghost: '\ud83d\udc7b', boss: '\ud83d\udc09' }[enemy] || '\ud83d\udc7e';
+    var icons = { bot: '\ud83d\udc7e', ghost: '\ud83d\udc7b', boss: '\ud83d\udc09' };
+    return icons[enemy] || '\ud83d\udc7e';
   }
 
   return {
-    PATTERNS,
-    TIERS,
-    VOLUME_NAMES,
-    getPattern,
-    getTier,
-    getAllPatterns,
-    getAllTiers,
-    getVolumeName,
-    capitalize,
-    makeLevelId,
-    getTierIcon,
-    getTierEnemyIcon
+    PATTERNS: PATTERNS,
+    TIERS: TIERS,
+    VOLUME_NAMES: VOLUME_NAMES,
+    getPattern: getPattern,
+    getTier: getTier,
+    getAllPatterns: getAllPatterns,
+    getAllTiers: getAllTiers,
+    getVolumeName: getVolumeName,
+    capitalize: capitalize,
+    makeLevelId: makeLevelId,
+    getTierIcon: getTierIcon,
+    getTierEnemyIcon: getTierEnemyIcon
   };
 })();
