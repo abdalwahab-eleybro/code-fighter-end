@@ -19,10 +19,10 @@ document.addEventListener('DOMContentLoaded', () => {
     CF.UI.Navigation.init();
     
     // Update profile bar
-    CF.UI.Components.updateProfileBar();
+    CF.UI.ProfileBar.render();
     
     // Set up periodic updates
-    setInterval(CF.UI.Components.updateProfileBar, 1000);
+    setInterval(CF.UI.ProfileBar.update, 1000);
     
     console.log('Code Fighter Engine Initialized Successfully');
   } catch (error) {

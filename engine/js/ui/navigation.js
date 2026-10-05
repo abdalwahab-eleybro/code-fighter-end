@@ -14,44 +14,20 @@ CF.UI.Navigation = (() => {
   // Screen elements cache
   const screens = {};
   let currentScreen = null;
-  let templatesLoaded = false;
 
   /* Initialize navigation */
   function init() {
-    // Load all templates
-    loadTemplates();
+    // Find all screen elements
+    const screenElements = document.querySelectorAll('.screen');
+    screenElements.forEach(el => {
+      screens[el.id.replace('screen-', '')] = el;
+    });
     
     // Setup event listeners
     setupEventListeners();
     
     // Show initial screen
     showScreen('menu');
-  }
-
-  /* Load all HTML templates */
-  async function loadTemplates() {
-    if (templatesLoaded) return;
-    
-    const templateFiles = [
-      'menu', 'map', 'fight', 'shop', 'settings', 'recap', 'learn'
-    ];
-    
-    const app = document.getElementById('app');
-    
-    for (const file of templateFiles) {
-      try {
-        const response = await fetch(`templates/${file}.html`);
-        if (response.ok) {
-          const html = await response.text();
-          app.insertAdjacentHTML('beforeend', html);
-          screens[file] = document.getElementById(`screen-${file}`);
-        }
-      } catch (e) {
-        console.warn(`Failed to load template: ${file}.html`, e);
-      }
-    }
-    
-    templatesLoaded = true;
   }
 
   /* Setup event listeners for navigation */
@@ -81,9 +57,6 @@ CF.UI.Navigation = (() => {
         case 'btnMapBack':
           showMenu();
           break;
-        case 'btnMapBack':
-          showMenu();
-          break;
         case 'fightExit':
           showMap();
           break;
@@ -103,6 +76,36 @@ CF.UI.Navigation = (() => {
     if (screen) {
       screen.classList.add('active');
       currentScreen = screenName;
+      
+      // Initialize screen-specific UI
+      initializeScreen(screenName);
+    }
+  }
+
+  /* Initialize screen-specific UI */
+  function initializeScreen(screenName) {
+    switch (screenName) {
+      case 'menu':
+        // Menu doesn't need initialization
+        break;
+      case 'map':
+        CF.UI.MapUI.render();
+        break;
+      case 'fight':
+        // Fight will be initialized when starting a level
+        break;
+      case 'shop':
+        CF.UI.ShopUI.render();
+        break;
+      case 'settings':
+        CF.UI.SettingsUI.render();
+        break;
+      case 'recap':
+        CF.UI.RecapUI.render();
+        break;
+      case 'learn':
+        CF.UI.LearnUI.render();
+        break;
     }
   }
 
@@ -115,8 +118,6 @@ CF.UI.Navigation = (() => {
   /* Show map */
   function showMap() {
     showScreen('map');
-    // Render map content
-    CF.UI.MapUI.render();
   }
 
   /* Show fight for a specific level */
@@ -128,25 +129,21 @@ CF.UI.Navigation = (() => {
   /* Show shop */
   function showShop() {
     showScreen('shop');
-    CF.UI.ShopUI.render();
   }
 
   /* Show settings */
   function showSettings() {
     showScreen('settings');
-    CF.UI.SettingsUI.render();
   }
 
   /* Show recap */
   function showRecap() {
     showScreen('recap');
-    CF.UI.RecapUI.render();
   }
 
   /* Show learn */
   function showLearn() {
     showScreen('learn');
-    CF.UI.LearnUI.render();
   }
 
   /* Start blitz mode */
