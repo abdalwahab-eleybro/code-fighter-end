@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0e1a">
+  <title>Code Fighter &mdash; Campaign</title>
+  
+  <!-- Load CSS -->
+  <link rel="stylesheet" href="css/styles.css">
+  
+  <!-- Preload templates -->
+  <link rel="preload" href="templates/menu.html" as="document">
+  <link rel="preload" href="templates/map.html" as="document">
+  <link rel="preload" href="templates/fight.html" as="document">
+  <link rel="preload" href="templates/shop.html" as="document">
+  <link rel="preload" href="templates/settings.html" as="document">
+  <link rel="preload" href="templates/recap.html" as="document">
+  <link rel="preload" href="templates/learn.html" as="document">
+</head>
+<body>
+  <!-- Container for all screens -->
+  <div id="app"></div>
+
+  <!-- Load Templates -->
+  <div id="templates" style="display: none;">
+    <!-- Templates will be loaded dynamically -->
+  </div>
+
+  <!-- Load JavaScript -->
+  <!-- Data Modules (load first) -->
+  <script src="js/data/fighters.js"></script>
+  <script src="js/data/patterns.js"></script>
+  <script src="js/data/questions.js"></script>
+  
+  <!-- Core Modules -->
+  <script src="js/modules/state.js"></script>
+  <script src="js/modules/campaign.js"></script>
+  
+  <!-- UI Modules -->
+  <script src="js/ui/components.js"></script>
+  <script src="js/ui/navigation.js"></script>
+  <script src="js/ui/profile-bar.js"></script>
+  <script src="js/ui/map-ui.js"></script>
+  <script src="js/ui/fight-ui.js"></script>
+  <script src="js/ui/recap-ui.js"></script>
+  <script src="js/ui/shop-ui.js"></script>
+  <script src="js/ui/settings-ui.js"></script>
+  <script src="js/ui/learn-ui.js"></script>
+  
+  <!-- Feature Modules -->
+  <script src="js/modules/fight.js"></script>
+  <script src="js/modules/shop.js"></script>
+  <script src="js/modules/settings.js"></script>
+  <script src="js/modules/blitz.js"></script>
+  <script src="js/modules/learn.js"></script>
+  <script src="js/modules/audio.js"></script>
+  
+  <!-- Main Entry Point -->
+  <script src="js/main.js"></script>
+</body>
+</html>

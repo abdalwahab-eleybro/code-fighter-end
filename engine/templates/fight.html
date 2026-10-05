@@ -1,0 +1,40 @@
+<!-- Fight Screen Template -->
+<div class="screen" id="screen-fight">
+  <!-- HUD -->
+  <header class="fight-hud">
+    <div class="fight-fighter-info">
+      <span class="fight-name">&#129431; You</span>
+      <div class="fight-bar"><div class="fight-fill" id="fightPlayerHealth" style="width:100%"></div></div>
+    </div>
+    <div class="fight-timer-box">
+      <div class="fight-timer" id="fightTimer">0:00</div>
+      <div class="fight-timer-label">TIME</div>
+    </div>
+    <div class="fight-fighter-info right">
+      <span class="fight-name enemy-name" id="fightEnemyName">&#128126; Bot</span>
+      <div class="fight-bar"><div class="fight-fill enemy-fill" id="fightEnemyHealth" style="width:100%"></div></div>
+    </div>
+  </header>
+
+  <!-- Arena -->
+  <div class="arena" id="fightArena">
+    <div class="fighter player" id="fightPlayer">&#129431;</div>
+    <div class="fighter enemy" id="fightEnemy">&#128126;</div>
+  </div>
+
+  <!-- Question area -->
+  <div class="fight-question-wrap">
+    <div class="boss-banner" id="bossBanner" style="display:none"></div>
+    <div class="fight-question-head">
+      <span class="question-counter" id="questionCounter">Q1 / 5</span>
+      <span class="tier-timer" id="tierTimer" data-tier="perfect">0.0s</span>
+    </div>
+    <div id="questionWrap"></div>
+    <div class="fight-feedback" id="fightFeedback"></div>
+    <div class="fight-actions">
+      <button class="btn ghost" id="fightHint">&#128269; Hint (&minus;5 HP)</button>
+      <button class="btn ghost" id="fightSkip">&#8963; Skip (&minus;10 HP)</button>
+      <button class="btn ghost" id="fightExit">&times; Exit</button>
+    </div>
+  </div>
+</div>
