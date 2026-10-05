@@ -131,36 +131,42 @@
   </div>
 
   <!-- ============================================
-       SCRIPTS
+       SCRIPTS - Loaded in dependency order
        ============================================ -->
   
-  <!-- Data Modules (load first) -->
+  <!-- Data Modules (no dependencies) -->
   <script src="js/data/fighters.js"></script>
   <script src="js/data/patterns.js"></script>
+  
+  <!-- Core State Module (no dependencies) -->
+  <script src="js/modules/state.js"></script>
+  
+  <!-- Data that depends on state -->
   <script src="js/data/questions.js"></script>
   
-  <!-- Core Modules -->
-  <script src="js/modules/state.js"></script>
+  <!-- Campaign depends on state and patterns -->
   <script src="js/modules/campaign.js"></script>
   
-  <!-- UI Modules -->
+  <!-- UI Components (depends on state) -->
   <script src="js/ui/components.js"></script>
-  <script src="js/ui/navigation.js"></script>
-  <script src="js/ui/profile-bar.js"></script>
-  <script src="js/ui/map-ui.js"></script>
-  <script src="js/ui/fight-ui.js"></script>
-  <script src="js/ui/recap-ui.js"></script>
-  <script src="js/ui/shop-ui.js"></script>
-  <script src="js/ui/settings-ui.js"></script>
-  <script src="js/ui/learn-ui.js"></script>
   
-  <!-- Feature Modules -->
+  <!-- Feature modules -->
   <script src="js/modules/fight.js"></script>
   <script src="js/modules/shop.js"></script>
   <script src="js/modules/settings.js"></script>
   <script src="js/modules/blitz.js"></script>
   <script src="js/modules/learn.js"></script>
   <script src="js/modules/audio.js"></script>
+  
+  <!-- UI Modules (depend on various modules) -->
+  <script src="js/ui/profile-bar.js"></script>
+  <script src="js/ui/navigation.js"></script>
+  <script src="js/ui/map-ui.js"></script>
+  <script src="js/ui/fight-ui.js"></script>
+  <script src="js/ui/recap-ui.js"></script>
+  <script src="js/ui/shop-ui.js"></script>
+  <script src="js/ui/settings-ui.js"></script>
+  <script src="js/ui/learn-ui.js"></script>
   
   <!-- Main Entry Point -->
   <script src="js/main.js"></script>
